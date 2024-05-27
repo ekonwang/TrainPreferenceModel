@@ -42,7 +42,7 @@ def reparametrize_func(args):
     train_embedder.encoder.backbone = train_embedder.encoder.backbone.merge_and_unload()
 
     untrained_hf_internlm2_prefmodel_pth = '/fs-computility/llm/shared/wangyikun/ckpts/internlm2-preference-1_8b-sft-untrained'
-    target_hf_internlm2_prefmodel_pth = '/fs-computility/llm/shared/wangyikun/ckpts/internlm2-preference-V1_0-1_8b-reparametrized'
+    target_hf_internlm2_prefmodel_pth = args.target_hf_save_pth
     hf_pref_model = AutoModel.from_pretrained(untrained_hf_internlm2_prefmodel_pth, trust_remote_code=True)
     print(train_embedder)
     print(hf_pref_model)
@@ -73,10 +73,14 @@ def reparametrize_func(args):
 
         embedder_logits, _, _ = train_embedder(tokens, None, None)
         hf_logits = hf_pref_model(tokens['input_ids']).logits
-        print(f"Embedder Preference V1.0 logits: {embedder_logits}")
-        print(f"Huggingface Preference V1.0 logits: {hf_logits}")
-        print("---------------- Test Pass !!! --------------")
-        print()
+        print(f"Embedder Preference Model logits: {embedder_logits}")
+        print(f"Huggingface Preference Model logits: {hf_logits}")
+        if torch.allclose(embedder_logits, hf_logits):
+            print("---------------- Test Pass !!! --------------")
+            print()
+        else:
+            print("---------------- Test Failed !!! --------------")
+            print()
         # print(embedder_logits)
         # print(hf_logits)
 

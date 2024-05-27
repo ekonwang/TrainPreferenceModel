@@ -42,6 +42,7 @@ training_parser.add_argument('--record_log', type=str, default='wandb', help='Th
 training_parser.add_argument('--wandb_project_name', type=str, default='MistralEmbedder', help='The project name of the init wandb')
 training_parser.add_argument('--seed', type=int, default=20, help='Random seed')
 training_parser.add_argument('--extract_pseduolabel_0326', type=int, default=1, help='1 means using the extracted Puyu-20B pseduo labels, 0 means using GPT3 pseduo labels')
+training_parser.add_argument('--ad_preference_0326', type=int, default=0, help='read and tackle data with ad preference 0326 format.')
 training_parser.set_defaults(func=train_embedder)
 
 evaluating_parser =  subparsers.add_parser(name='evaluate', help='evaluating embedder')
@@ -64,6 +65,7 @@ evaluating_parser.set_defaults(func=evaluate_embedder)
 evaluating_parser.add_argument('--batch_size_per_gpu', type=int, default=20, help='The batch size in per GPU when DDP training')
 evaluating_parser.add_argument('--dev_mode', type=int, default=1, help='The evaluation mode of the embedder')
 evaluating_parser.add_argument('--extract_pseduolabel_0326', type=int, default=1, help='1 means using the extracted Puyu-20B pseduo labels, 0 means using GPT3 pseduo labels')
+evaluating_parser.add_argument('--ad_preference_0326', type=int, default=0, help='read and tackle data with ad preference 0326 format.')
 
 predicting_parser =  subparsers.add_parser(name='predict', help='prediction of embedder')
 predicting_parser.add_argument('--embedder_name', type=str, default='mistral_embedder', help='The name of the training embedder')
@@ -99,6 +101,7 @@ reparametrize_parser.add_argument('--embedder_ckpt_path', type=str, default='', 
 reparametrize_parser.add_argument('--dataset_config', type=str, default="/fs-computility/llm/shared/wangyikun/code/TrainPrefModel/configs/dataset_configs/pref_datasets.yaml", help='The evaluation tasks')
 reparametrize_parser.add_argument('--result_dir', type=str, default='/fs-computility/llm/shared/wangyikun/dump/ad_preference_0326_segmented/AD_Preference/results', help='The saved path of the evalyated results')
 reparametrize_parser.add_argument('--device', type=str, default='cuda', help='loading device')
+reparametrize_parser.add_argument('--target_hf_save_pth', type=str, default='/fs-computility/llm/shared/wangyikun/ckpts/internlm2-preference-V1_0-1_8b-reparametrized', help='The saving path of the reparametrized HF model')
 reparametrize_parser.set_defaults(func=reparametrize_func)
 
 args = parser.parse_args()

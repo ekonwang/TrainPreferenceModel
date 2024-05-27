@@ -1,0 +1,7 @@
+root_path: /fs-computility/llm/shared/wangyikun/dump/AD_Pref_Human_Annotate_0410
+internembedder_datasets:
+  - name: Dataset_Puyu20b_Preference
+    data_type: s2s
+    task_type: Preference
+    prompts: [""]
+    sampling_ratio: 1.0

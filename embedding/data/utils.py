@@ -14,6 +14,7 @@ def get_preference_pseduolabel_0326(sample, extract_pseduo_label=True):
 def tackle_preference_sample_0326(sample, extract_pseduo_label=True):
     if extract_pseduo_label:
         puyu_label = sample['preds']['ad']['pred_tag']
+        assert puyu_label != None and puyu_label in ['0', '1']
     else:
         puyu_label = sample['labels']['ad']
 

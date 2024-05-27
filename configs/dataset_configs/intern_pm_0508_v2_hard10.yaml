@@ -1,0 +1,7 @@
+root_path: /fs-computility/llm/shared/wangyikun/dump/ad_preference_0508/ad_preference_0508_v2_hard_7k
+internembedder_datasets:
+  - name: AD_Preference
+    data_type: s2s
+    task_type: Preference
+    prompts: [""]
+    sampling_ratio: 1.0
